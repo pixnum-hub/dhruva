@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="format-detection" content="telephone=no,date=no,address=no,email=no"/>
+<meta name="theme-color" content="#7c3aed"/>
+<meta name="color-scheme" content="dark light"/>
+<title>Dhruva — Premium Vedic Astrology</title>
+<meta name="description" content="Vedic astrology: kundli charts, dasha timeline, dosha analysis, panchang, choghadiya, ashtakavarga, kundli matching and PDF export."/>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json"/>
+<link rel="icon" href="favicon.ico" sizes="any"/>
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png"/>
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Dhruva"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<style>
+:root{--bg:#f4f6fb;--card:#ffffffdd;--txt:#111;--muted:#666;--pri:#7c3aed;--acc:#f59e0b;--shadow:0 8px 28px rgba(100,60,200,.13);--border:#e0d8f0;--good:#16a34a;--warn:#d97706;--danger:#dc2626}
+body.dark{--bg:#0f0c1a;--card:#1a1530dd;--txt:#f0eaff;--muted:#9d8fc0;--border:#2a2040;--shadow:0 8px 28px rgba(0,0,0,.4)}
+body.oled{--bg:#000;--card:#07050fee;--txt:#f0eaff;--muted:#7a6a9a;--border:#1a1228}
+body.hc{--bg:#000;--card:#000;--txt:#0f0;--muted:#aaa;--pri:#ff0;--border:#0f0}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+*{box-sizing:border-box;font-family:system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
+body{overflow-x:hidden;overscroll-behavior-y:contain}
+body{margin:0;background:linear-gradient(160deg,var(--bg),#1d4ed814);color:var(--txt);display:flex;justify-content:center;min-height:100vh;min-height:100dvh;
+  padding:calc(12px + env(safe-area-inset-top)) calc(12px + env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) calc(12px + env(safe-area-inset-left));
+  transition:.3s}
+.app{width:100%;max-width:440px}
+.card{background:var(--card);backdrop-filter:blur(18px);padding:18px;border-radius:24px;box-shadow:var(--shadow);margin-top:12px;border:1px solid var(--border)}
+h1{margin:6px 0 2px;font-size:1.9rem;text-align:center}
+.fields{display:flex;flex-direction:column;gap:6px;text-align:left}
+.fields label{font-size:.8rem;color:var(--muted);padding-left:2px;margin-bottom:-2px}
+input,select{width:100%;padding:12px 13px;border:1px solid var(--border);border-radius:13px;font-size:16px;min-height:44px;background:var(--card);color:var(--txt);outline:none;touch-action:manipulation}
+input:focus,select:focus{border-color:var(--pri)}
+.btn{width:100%;min-height:46px;padding:12px;border:none;border-radius:15px;font-size:.93rem;font-weight:700;cursor:pointer;margin-top:8px;transition:.2s;touch-action:manipulation}
+.btn:hover{opacity:.88;transform:translateY(-1px)}
+.btn-pri{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff}
+.btn-grn{background:linear-gradient(135deg,#16a34a,#0d9488);color:#fff}
+.btn-blu{background:linear-gradient(135deg,#0369a1,#0891b2);color:#fff}
+.btn-red{background:linear-gradient(135deg,#dc2626,#b91c1c);color:#fff}
+.btn-sm{padding:9px 12px;min-height:38px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--txt);cursor:pointer;font-size:.78rem;transition:.2s;white-space:nowrap;touch-action:manipulation}
+.btn-sm:hover{border-color:var(--pri);color:var(--pri)}
+.btn-sm.active{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;border-color:transparent}
+.btn-sm.danger{border-color:var(--danger);color:var(--danger)}
+.themeBtns{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.sec{margin-top:12px}
+.sec-title{font-size:.95rem;font-weight:700;color:var(--pri);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.result{padding:12px;border-radius:14px;background:color-mix(in srgb,var(--pri) 5%,transparent);border:1px solid var(--border);margin-top:8px;text-align:left;line-height:1.75;font-size:.9rem}
+.tag{display:inline-block;padding:4px 10px;border-radius:18px;background:color-mix(in srgb,var(--pri) 10%,transparent);margin:3px;font-size:.8rem;border:1px solid color-mix(in srgb,var(--pri) 20%,transparent)}
+.tag.good{background:color-mix(in srgb,var(--good) 12%,transparent);border-color:color-mix(in srgb,var(--good) 30%,transparent);color:var(--good)}
+.tag.warn{background:color-mix(in srgb,var(--warn) 12%,transparent);border-color:color-mix(in srgb,var(--warn) 30%,transparent);color:var(--warn)}
+.tag.danger{background:color-mix(in srgb,var(--danger) 10%,transparent);border-color:color-mix(in srgb,var(--danger) 25%,transparent);color:var(--danger)}
+.msg{font-size:.8rem;min-height:1.3em;margin-top:4px;text-align:center}
+hr{border:none;border-top:1px solid var(--border);margin:9px 0}
+.profile-item{display:flex;align-items:center;justify-content:space-between;padding:9px 11px;border:1px solid var(--border);border-radius:13px;margin-top:7px;gap:7px;text-align:left}
+.profile-info{flex:1;cursor:pointer}.pname{font-weight:700;font-size:.9rem}.pmeta{font-size:.73rem;color:var(--muted);margin-top:1px}
+.profile-actions{display:flex;gap:5px;flex-shrink:0}
+.export-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.bar-wrap{height:7px;background:color-mix(in srgb,var(--pri) 15%,transparent);border-radius:8px;margin:4px 0}
+.bar-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,var(--acc),var(--pri))}
+/* Kundli canvas */
+canvas{display:block;margin:0 auto;border-radius:12px;max-width:100%;height:auto}
+/* Dasha timeline */
+.tl{padding-left:18px;position:relative}.tl::before{content:'';position:absolute;left:5px;top:0;bottom:0;width:2px;background:var(--border)}
+.tl-item{position:relative;margin-bottom:11px}.tl-item::before{content:'';position:absolute;left:-15px;top:5px;width:8px;height:8px;border-radius:50%;background:var(--pri)}
+.tl-item.cur::before{background:var(--acc);box-shadow:0 0 0 3px color-mix(in srgb,var(--acc) 25%,transparent)}
+.tl-lord{font-weight:700;font-size:.88rem}.tl-dates{font-size:.73rem;color:var(--muted)}.tl-pred{font-size:.8rem;margin-top:2px}
+/* Guna table */
+.guna-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border);font-size:.83rem}
+.score-ring{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#2563eb);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;margin:0 auto 10px;box-shadow:0 4px 18px rgba(124,58,237,.3)}
+.score-ring .sn{font-size:1.5rem;font-weight:700}.score-ring .sl{font-size:.62rem;opacity:.85}
+/* Ashtakavarga grid */
+.avarga-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:6px}
+.avarga-cell{text-align:center;padding:5px 2px;border-radius:8px;background:var(--border);font-size:.75rem}
+.avarga-cell .hn{font-size:.65rem;color:var(--muted)}.avarga-cell .hs{font-weight:700}
+/* Choghadiya */
+.chog-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:6px}
+.chog-cell{padding:6px 3px;border-radius:9px;text-align:center;font-size:.73rem;border:1px solid transparent}
+.chog-good{background:color-mix(in srgb,var(--good) 12%,transparent);color:var(--good);border-color:color-mix(in srgb,var(--good) 25%,transparent)}
+.chog-bad{background:color-mix(in srgb,var(--danger) 10%,transparent);color:var(--danger);border-color:color-mix(in srgb,var(--danger) 20%,transparent)}
+.chog-mid{background:color-mix(in srgb,var(--warn) 10%,transparent);color:var(--warn);border-color:color-mix(in srgb,var(--warn) 20%,transparent)}
+.chog-cell.cur{outline:2px solid var(--acc);font-weight:700}
+/* Muhurat */
+.muh-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);font-size:.82rem}
+/* Gem card */
+.gem-card{border:1px solid var(--border);border-radius:13px;padding:10px;margin:7px 0;font-size:.83rem}
+.gem-name{font-weight:700;color:var(--pri);margin-bottom:4px;font-size:.9rem}
+/* Navamsa */
+.nav-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-top:6px}
+.nav-cell{border:1px solid var(--border);border-radius:6px;padding:4px;font-size:.7rem;text-align:center;min-height:36px}
+.nav-cell.asc{border-color:var(--pri);background:color-mix(in srgb,var(--pri) 8%,transparent)}
+footer{padding:16px 5px 8px;color:var(--muted);font-size:.78rem;text-align:center;line-height:1.8}
+@media (max-width:360px){
+  .themeBtns{grid-template-columns:repeat(2,1fr)}
+  .avarga-grid{grid-template-columns:repeat(4,1fr)}
+  .card{padding:14px}
+  .export-row{grid-template-columns:1fr}
+}
+@media (hover:none) and (pointer:coarse){
+  .profile-info,.btn-sm,.btn{cursor:default}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- Header -->
+<div class="card" style="text-align:center">
+  <h1>🔮 Dhruva</h1>
+  <p style="color:var(--muted);font-size:.85rem;margin:2px 0 12px">Premium Vedic Astrology</p>
+  <div class="themeBtns">
+    <button class="btn-sm" onclick="setTheme('')">☀️ Light</button>
+    <button class="btn-sm" onclick="setTheme('dark')">🌙 Dark</button>
+    <button class="btn-sm" onclick="setTheme('oled')">🖤 OLED</button>
+    <button class="btn-sm" onclick="setTheme('hc')">⚡ HC</button>
+  </div>
+</div>
+
+<!-- Install prompt (shown only when the browser offers install & it isn't already installed) -->
+<div class="card" id="installCard" style="display:none;text-align:center">
+  <b style="font-size:.9rem">📲 Install Dhruva</b>
+  <p style="color:var(--muted);font-size:.8rem;margin:4px 0 9px">Add it to your home screen for offline access and a full-screen app feel.</p>
+  <button class="btn btn-pri" onclick="installApp()">⬇️ Install App</button>
+</div>
+
+<!-- License / Subscription -->
+<div class="card" id="licenseCard">
+  <div id="licenseCardHeader" role="button" tabindex="0" onclick="toggleLicenseCard()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleLicenseCard()}"
+    style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;cursor:pointer;user-select:none">
+    <span style="display:flex;align-items:center;gap:7px">
+      <b style="font-size:.92rem">🔐 License</b>
+      <span id="licenseStatus"></span>
+    </span>
+    <span id="licenseChevron" style="color:var(--muted);transition:transform .2s;font-size:.8rem">▾</span>
+  </div>
+  <div id="licenseCardBody" style="display:none;margin-top:9px">
+    <div class="result">
+      <b>₹399 / month</b> — full access to charts, dasha, dosha, panchang, matching &amp; PDF export.<br>
+      <small style="color:var(--muted)">14-day free trial, no card required. One license per machine.</small>
+    </div>
+    <div class="fields" style="margin-top:10px">
+      <label>💻 Your Machine ID <span style="color:var(--muted)">(send this when you subscribe)</span></label>
+      <div style="display:flex;gap:6px">
+        <input id="machineIdDisplay" readonly style="font-family:monospace;font-size:.82rem"/>
+        <button class="btn-sm" onclick="copyMachineId()" style="flex-shrink:0">📋 Copy</button>
+      </div>
+      <label style="margin-top:6px">🔑 License Key</label>
+      <input id="licenseKeyInput" placeholder="XXXX-XXXX-XXXX-XXXX" style="font-family:monospace;text-transform:uppercase"/>
+    </div>
+    <button class="btn btn-grn" onclick="activateLicense()" style="margin-top:9px">✅ Activate</button>
+    <div id="licenseMsg" class="msg"></div>
+    <p style="color:var(--muted);font-size:.73rem;margin-top:8px">
+      To subscribe: pay ₹399 via UPI to <b>YOUR-UPI-ID@bank</b> <span style="color:var(--danger)">(update this)</span>
+      and share your Machine ID via <b>WhatsApp/Email — update this</b>. You'll receive a new key each month.
+    </p>
+    <p style="text-align:center;margin-top:6px">
+      <a href="#" onclick="openAdminPanel();return false" style="color:var(--muted);font-size:.72rem">🔑 I'm the developer</a>
+    </p>
+    <div id="adminPanel" style="display:none;margin-top:10px;border-top:1px solid var(--border);padding-top:10px">
+      <b style="font-size:.85rem">🛠️ Generate a Customer Key</b>
+      <div class="fields" style="margin-top:7px">
+        <label>Customer's Machine ID</label>
+        <input id="adminMachineId" placeholder="DHRV-XXXX-XXXX-XXXX" style="font-family:monospace"/>
+        <label>Month (blank = current)</label>
+        <input id="adminMonth" placeholder="YYYY-MM"/>
+      </div>
+      <button class="btn btn-blu" onclick="generateKeyForCustomer()" style="margin-top:7px">Generate Key</button>
+      <div id="adminGeneratedKey" style="font-family:monospace;font-weight:700;text-align:center;margin-top:8px;font-size:1rem"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Saved Profiles -->
+<div class="card">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+    <b style="font-size:.92rem">👥 Saved Profiles</b>
+    <button class="btn-sm" onclick="clearForm()">＋ Add New</button>
+  </div>
+  <div id="profilesList"><p style="color:var(--muted);font-size:.83rem;margin-top:7px">No saved profiles yet.</p></div>
+</div>
+
+<!-- Form -->
+<div class="card">
+  <b style="font-size:.92rem">📋 Birth Details</b>
+  <div class="fields" style="margin-top:11px">
+    <label>👤 Full Name</label><input id="name" placeholder="Enter full name"/>
+    <label>📅 Date of Birth</label><input type="date" id="dob"/>
+    <label>⏰ Time of Birth</label><input type="time" id="tob"/>
+    <label>🌍 Birth City</label>
+    <small style="color:var(--muted);margin:-3px 0 2px">Enter birth time exactly as it appeared on the clock at birth — timezone is applied automatically.</small>
+    <select id="place">
+      <option value="Kolkata|22.5726|88.3639|5.5">Kolkata, India</option>
+      <option value="Delhi|28.6139|77.2090|5.5">Delhi, India</option>
+      <option value="Mumbai|19.0760|72.8777|5.5">Mumbai, India</option>
+      <option value="Chennai|13.0827|80.2707|5.5">Chennai, India</option>
+      <option value="Bengaluru|12.9716|77.5946|5.5">Bengaluru, India</option>
+      <option value="Hyderabad|17.3850|78.4867|5.5">Hyderabad, India</option>
+      <option value="Pune|18.5204|73.8567|5.5">Pune, India</option>
+      <option value="Jaipur|26.9124|75.7873|5.5">Jaipur, India</option>
+      <option value="Ahmedabad|23.0225|72.5714|5.5">Ahmedabad, India</option>
+      <option value="Lucknow|26.8467|80.9462|5.5">Lucknow, India</option>
+      <option value="Chandigarh|30.7333|76.7794|5.5">Chandigarh, India</option>
+      <option value="Patna|25.5941|85.1376|5.5">Patna, India</option>
+      <option value="Bhopal|23.2599|77.4126|5.5">Bhopal, India</option>
+      <option value="Nagpur|21.1458|79.0882|5.5">Nagpur, India</option>
+      <option value="Varanasi|25.3176|82.9739|5.5">Varanasi, India</option>
+      <option value="London|51.5072|-0.1276|0">London, UK</option>
+      <option value="New York|40.7128|-74.0060|-5">New York, USA</option>
+      <option value="Los Angeles|34.0522|-118.2437|-8">Los Angeles, USA</option>
+      <option value="Toronto|43.6532|-79.3832|-5">Toronto, Canada</option>
+      <option value="Dubai|25.2048|55.2708|4">Dubai, UAE</option>
+      <option value="Singapore|1.3521|103.8198|8">Singapore</option>
+      <option value="Tokyo|35.6762|139.6503|9">Tokyo, Japan</option>
+      <option value="Sydney|-33.8688|151.2093|10">Sydney, Australia</option>
+    </select>
+    <label style="margin-top:4px">💑 Partner Name <span style="color:var(--muted)">(optional, for compatibility)</span></label>
+    <input id="partner" placeholder="Partner full name"/>
+    <label>📅 Partner Date of Birth</label>
+    <input type="date" id="pdob"/>
+  </div>
+  <button class="btn btn-grn" onclick="saveProfile()" style="margin-top:11px">💾 Save Profile</button>
+  <button class="btn btn-pri" onclick="calcAstro()">✨ Generate Kundli</button>
+  <div id="saveMsg" class="msg"></div>
+  <div id="out"></div>
+</div>
+
+<!-- Export -->
+<div class="card" id="exportCard" style="display:none">
+  <b style="font-size:.92rem">📤 Export Report</b>
+  <div class="export-row">
+    <button class="btn btn-blu" onclick="saveAsText()">📄 Save as Text</button>
+    <button class="btn btn-red" onclick="saveAsPDF()">🖨️ Save as PDF</button>
+  </div>
+  <p style="color:var(--muted);font-size:.73rem;margin-top:7px">PDF downloads as a real .pdf file — opens in Adobe Acrobat &amp; all PDF readers.</p>
+</div>
+
+<footer>© Manik Roy <span id="yr"></span>. All Rights Reserved.</footer>
+</div>
+
+<script>
+document.getElementById('yr').innerText=new Date().getFullYear();
+
+// ── Theme ─────────────────────────────────────────────────────────────────────
+function setTheme(m){document.body.className=m;localStorage.dhruvaTheme=m}
+document.body.className=localStorage.dhruvaTheme||'dark';
+
+// ── Licensing (client-side soft-lock — see note at bottom of this block) ───────
+// IMPORTANT: this is a single static HTML file with no server. There is no way for
+// client-side JS to issue a cryptographically unforgeable "machine ID" (browsers
+// don't expose real hardware identifiers) or to truly stop a determined user from
+// reading this source, clearing localStorage, or patching out the check in devtools.
+// What this DOES do: give casual/well-intentioned users a real 14-day trial, then a
+// simple monthly password-style key (computed from a machine fingerprint + a secret
+// you control) that you generate yourself per customer via the "I'm the developer"
+// panel below — a common pattern for offline/indie software. Treat it as a paywall
+// deterrent, not DRM. Change LICENSE_SECRET and ADMIN_PASSWORD_HASH before shipping.
+const LICENSE_SECRET='DHRUVA-LICENSE-SECRET-2026-CHANGE-ME'; // change before you ship — anyone who reads the source can see it
+const ADMIN_PASSWORD_HASH='03255f23dfd6c6913273e8a5d1752f74f06099d50556c3f8ba3abeb5ad9e0dc3'; // sha256 of a password only you know; default password is 'ManikRoy@Dhruva2026' — CHANGE THIS
+const TRIAL_DAYS=14;
+
+async function sha256Hex(str){
+  const buf=await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function computeFingerprint(){
+  const parts=[navigator.userAgent,`${screen.width}x${screen.height}x${screen.colorDepth}`,
+    navigator.hardwareConcurrency||'',navigator.language,
+    (Intl.DateTimeFormat().resolvedOptions().timeZone||'')];
+  try{
+    const c=document.createElement('canvas');c.width=200;c.height=40;
+    const ctx=c.getContext('2d');ctx.textBaseline='top';ctx.font='14px Arial';
+    ctx.fillStyle='#f60';ctx.fillRect(0,0,100,20);ctx.fillStyle='#069';ctx.fillText('Dhruva-FP',2,2);
+    parts.push(c.toDataURL());
+  }catch{}
+  return parts.join('||');
+}
+async function getMachineId(){
+  let id=localStorage.dhruvaMachineId;
+  if(id)return id;
+  const hash=await sha256Hex(await computeFingerprint());
+  id=`DHRV-${hash.slice(0,4)}-${hash.slice(4,8)}-${hash.slice(8,12)}`.toUpperCase();
+  localStorage.dhruvaMachineId=id;
+  return id;
+}
+function currentMonthToken(){const d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`}
+async function computeLicenseKey(machineId,monthToken){
+  const h=await sha256Hex(`${machineId}|${monthToken}|${LICENSE_SECRET}`);
+  return h.slice(0,16).toUpperCase().match(/.{1,4}/g).join('-');
+}
+function getTrialStart(){
+  let s=localStorage.dhruvaTrialStart;
+  if(!s){s=Date.now();localStorage.dhruvaTrialStart=s}
+  return parseInt(s,10);
+}
+function getTrialDaysLeft(){
+  const elapsedDays=(Date.now()-getTrialStart())/86400000;
+  return Math.max(0,Math.ceil(TRIAL_DAYS-elapsedDays));
+}
+function getSavedLicense(){try{return JSON.parse(localStorage.dhruvaLicense||'null')}catch{return null}}
+async function isLicensedNow(){
+  const lic=getSavedLicense();if(!lic)return false;
+  const mid=await getMachineId();
+  return lic.machineId===mid&&lic.month===currentMonthToken();
+}
+async function isEntitled(){return(await isLicensedNow())||getTrialDaysLeft()>0}
+
+async function activateLicense(){
+  const input=(document.getElementById('licenseKeyInput').value||'').trim().toUpperCase();
+  if(!input){showLicenseMsg('⚠️ Enter your license key first.','#d97706');return}
+  const mid=await getMachineId(),month=currentMonthToken();
+  const expected=await computeLicenseKey(mid,month);
+  if(input===expected){
+    localStorage.dhruvaLicense=JSON.stringify({machineId:mid,month,key:input});
+    showLicenseMsg('✅ Activated — thanks for subscribing!','#16a34a');
+  }else{
+    showLicenseMsg('❌ Invalid or expired key for this machine/month.','#dc2626');
+  }
+  await refreshLicenseUI();
+}
+function showLicenseMsg(msg,color){
+  const el=document.getElementById('licenseMsg');if(!el)return;
+  el.textContent=msg;el.style.color=color;setTimeout(()=>{el.textContent=''},4000);
+}
+function copyMachineId(){
+  const el=document.getElementById('machineIdDisplay');if(!el)return;
+  el.select();el.setSelectionRange(0,99999);
+  try{document.execCommand('copy');showLicenseMsg('📋 Machine ID copied.','#7c3aed')}catch{}
+}
+async function refreshLicenseUI(){
+  const mid=await getMachineId();
+  const midEl=document.getElementById('machineIdDisplay');if(midEl)midEl.value=mid;
+  const licensed=await isLicensedNow(),daysLeft=getTrialDaysLeft();
+  const statusEl=document.getElementById('licenseStatus');
+  if(!statusEl)return;
+  if(licensed)statusEl.innerHTML='<span class="tag good">✅ Licensed this month</span>';
+  else if(daysLeft>0)statusEl.innerHTML=`<span class="tag warn">🎁 Trial — ${daysLeft} day${daysLeft===1?'':'s'} left</span>`;
+  else statusEl.innerHTML='<span class="tag danger">🔒 Trial expired</span>';
+}
+function setLicenseCardOpen(open){
+  const body=document.getElementById('licenseCardBody'),chev=document.getElementById('licenseChevron');
+  if(!body)return;
+  body.style.display=open?'block':'none';
+  if(chev)chev.style.transform=open?'rotate(180deg)':'rotate(0deg)';
+}
+function toggleLicenseCard(){
+  const body=document.getElementById('licenseCardBody');
+  setLicenseCardOpen(body&&body.style.display==='none');
+}
+async function openAdminPanel(){
+  const pwd=prompt('Admin password:');
+  if(pwd===null)return;
+  if((await sha256Hex(pwd))!==ADMIN_PASSWORD_HASH){alert('Incorrect admin password.');return}
+  const panel=document.getElementById('adminPanel');
+  panel.style.display='block';panel.scrollIntoView({behavior:'smooth'});
+}
+async function generateKeyForCustomer(){
+  const mid=(document.getElementById('adminMachineId').value||'').trim().toUpperCase();
+  const month=(document.getElementById('adminMonth').value||'').trim()||currentMonthToken();
+  if(!mid){alert('Enter the customer\'s Machine ID.');return}
+  document.getElementById('adminGeneratedKey').textContent=await computeLicenseKey(mid,month);
+}
+
+// ── Profiles ──────────────────────────────────────────────────────────────────
+function getProfiles(){try{return JSON.parse(localStorage.dhruvaProfiles||'[]')}catch{return[]}}
+function saveProfiles(a){localStorage.dhruvaProfiles=JSON.stringify(a)}
+function renderProfiles(){
+  const list=document.getElementById('profilesList'),profiles=getProfiles();
+  if(!profiles.length){list.innerHTML='<p style="color:var(--muted);font-size:.83rem;margin-top:7px">No saved profiles yet.</p>';return}
+  list.innerHTML=profiles.map((p,i)=>`<div class="profile-item">
+    <div class="profile-info" onclick="loadProfile(${i})">
+      <div class="pname">👤 ${p.name}</div>
+      <div class="pmeta">${p.dob} • ${p.tob} • ${p.placeLabel}</div>
+    </div>
+    <div class="profile-actions">
+      <button class="btn-sm" onclick="loadProfile(${i})">Load</button>
+      <button class="btn-sm danger" onclick="deleteProfile(${i})">✕</button>
+    </div>
+  </div>`).join('');
+}
+function saveProfile(){
+  const name=document.getElementById('name').value.trim(),dob=document.getElementById('dob').value;
+  const tob=document.getElementById('tob').value,sel=document.getElementById('place');
+  if(!name||!dob){showMsg('⚠️ Enter name and date first.','#d97706');return}
+  const profiles=getProfiles(),entry={name,dob,tob,place:sel.value,placeLabel:sel.options[sel.selectedIndex].text};
+  const idx=profiles.findIndex(p=>p.name.toLowerCase()===name.toLowerCase());
+  if(idx>=0){profiles[idx]=entry;showMsg('✅ Profile updated!','#16a34a')}
+  else{profiles.push(entry);showMsg('✅ Profile saved!','#16a34a')}
+  saveProfiles(profiles);renderProfiles();
+}
+function loadProfile(i){
+  const p=getProfiles()[i];if(!p)return;
+  document.getElementById('name').value=p.name;
+  document.getElementById('dob').value=p.dob;
+  document.getElementById('tob').value=p.tob;
+  document.getElementById('place').value=p.place;
+  showMsg('🔄 Profile loaded — tap Generate Kundli.','#7c3aed');
+}
+function deleteProfile(i){
+  const profiles=getProfiles(),name=profiles[i]?.name||'this profile';
+  if(!confirm(`Delete profile for ${name}?`))return;
+  profiles.splice(i,1);saveProfiles(profiles);renderProfiles();
+  showMsg('🗑️ Profile deleted.','#dc2626');
+}
+function clearForm(){
+  ['name','dob','tob','partner','pdob'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('place').selectedIndex=0;
+}
+function showMsg(msg,color){
+  const el=document.getElementById('saveMsg');el.textContent=msg;el.style.color=color;
+  setTimeout(()=>{el.textContent=''},3000);
+}
+
+// ── Astronomy ─────────────────────────────────────────────────────────────────
+const SIGNS=["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"];
+const SIGNS_S=["Ar","Ta","Ge","Ca","Le","Vi","Li","Sc","Sg","Cp","Aq","Pi"];
+const NAK=["Ashwini","Bharani","Krittika","Rohini","Mrigashira","Ardra","Punarvasu","Pushya","Ashlesha","Magha","Purva Phalguni","Uttara Phalguni","Hasta","Chitra","Swati","Vishakha","Anuradha","Jyeshtha","Mula","Purva Ashadha","Uttara Ashadha","Shravana","Dhanishta","Shatabhisha","Purva Bhadrapada","Uttara Bhadrapada","Revati"];
+const NAK_LORD=["Ketu","Venus","Sun","Moon","Mars","Rahu","Jupiter","Saturn","Mercury","Ketu","Venus","Sun","Moon","Mars","Rahu","Jupiter","Saturn","Mercury","Ketu","Venus","Sun","Moon","Mars","Rahu","Jupiter","Saturn","Mercury"];
+const TITHI_N=["Pratipada","Dwitiya","Tritiya","Chaturthi","Panchami","Shashthi","Saptami","Ashtami","Navami","Dashami","Ekadashi","Dwadashi","Trayodashi","Chaturdashi","Purnima","Pratipada K","Dwitiya K","Tritiya K","Chaturthi K","Panchami K","Shashthi K","Saptami K","Ashtami K","Navami K","Dashami K","Ekadashi K","Dwadashi K","Trayodashi K","Chaturdashi K","Amavasya"];
+const YOGA_N=["Vishkumbha","Preeti","Ayushman","Saubhagya","Shobhana","Atiganda","Sukarma","Dhriti","Shoola","Ganda","Vriddhi","Dhruva","Vyaghata","Harshana","Vajra","Siddhi","Vyatipata","Variyana","Parigha","Shiva","Siddha","Sadhya","Shubha","Shukla","Brahma","Indra","Vaidhriti"];
+const KARANA_N=["Bava","Balava","Kaulava","Taitila","Garija","Vanija","Vishti","Shakuni","Chatushpada","Naga","Kimstughna"];
+const VARA_N=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const VARA_LORD=["Sun","Moon","Mars","Mercury","Jupiter","Venus","Saturn"];
+// Vimshottari dasha sequence
+const DASHA=[{n:"Ketu",y:7},{n:"Venus",y:20},{n:"Sun",y:6},{n:"Moon",y:10},{n:"Mars",y:7},{n:"Rahu",y:18},{n:"Jupiter",y:16},{n:"Saturn",y:19},{n:"Mercury",y:17}];
+// Planet dignity
+const DIGNITY={Sun:{ex:0,db:6,own:[4]},Moon:{ex:1,db:7,own:[3]},Mars:{ex:9,db:3,own:[0,7]},Mercury:{ex:5,db:11,own:[2,5]},Jupiter:{ex:3,db:9,own:[8,11]},Venus:{ex:11,db:5,own:[1,6]},Saturn:{ex:6,db:0,own:[9,10]},Rahu:{ex:2,db:8,own:[]},Ketu:{ex:8,db:2,own:[]}};
+// Ashtakavarga base scores per planet per sign (simplified Brihat Parasara values)
+const AVG_BASE={Sun:[1,0,1,0,1,1,0,1,1,0,0,1],Moon:[0,1,1,1,0,0,0,1,1,1,0,0],Mars:[0,0,1,1,0,0,0,1,0,1,1,0],Mercury:[1,0,1,0,1,1,0,1,0,0,1,1],Jupiter:[1,1,0,1,1,0,1,0,1,1,0,1],Venus:[0,1,1,0,0,1,1,0,1,0,1,0],Saturn:[0,0,1,1,0,0,1,0,0,1,1,0]};
+// Rahu Kalam by weekday (1-indexed slot of 8 daytime portions)
+const RAHU_K=[8,2,7,5,6,4,3];
+// Choghadiya day order by weekday
+const CHOG_DAY=[[{n:"Udveg",q:"bad"},{n:"Char",q:"good"},{n:"Labh",q:"good"},{n:"Amrit",q:"good"},{n:"Kaal",q:"bad"},{n:"Shubh",q:"good"},{n:"Rog",q:"bad"},{n:"Udveg",q:"bad"}],[{n:"Amrit",q:"good"},{n:"Kaal",q:"bad"},{n:"Shubh",q:"good"},{n:"Rog",q:"bad"},{n:"Udveg",q:"bad"},{n:"Char",q:"good"},{n:"Labh",q:"good"},{n:"Amrit",q:"good"}],[{n:"Kaal",q:"bad"},{n:"Shubh",q:"good"},{n:"Rog",q:"bad"},{n:"Udveg",q:"bad"},{n:"Char",q:"good"},{n:"Labh",q:"good"},{n:"Amrit",q:"good"},{n:"Kaal",q:"bad"}],[{n:"Rog",q:"bad"},{n:"Udveg",q:"bad"},{n:"Char",q:"good"},{n:"Labh",q:"good"},{n:"Amrit",q:"good"},{n:"Kaal",q:"bad"},{n:"Shubh",q:"good"},{n:"Rog",q:"bad"}],[{n:"Shubh",q:"good"},{n:"Amrit",q:"good"},{n:"Kaal",q:"bad"},{n:"Shubh",q:"good"},{n:"Rog",q:"bad"},{n:"Udveg",q:"bad"},{n:"Char",q:"good"},{n:"Labh",q:"good"}],[{n:"Char",q:"good"},{n:"Labh",q:"good"},{n:"Amrit",q:"good"},{n:"Kaal",q:"bad"},{n:"Shubh",q:"good"},{n:"Rog",q:"bad"},{n:"Udveg",q:"bad"},{n:"Char",q:"good"}],[{n:"Labh",q:"good"},{n:"Amrit",q:"good"},{n:"Kaal",q:"bad"},{n:"Shubh",q:"good"},{n:"Rog",q:"bad"},{n:"Udveg",q:"bad"},{n:"Char",q:"good"},{n:"Labh",q:"good"}]];
+
+const CAREER_MAP={Aries:"Leadership, defence, entrepreneurship, sports.",Taurus:"Banking, finance, luxury goods, real estate.",Gemini:"Media, writing, IT, sales, communication.",Cancer:"Healthcare, food, real estate, social work.",Leo:"Politics, management, entertainment, medicine.",Virgo:"Analysis, accounting, medicine, research.",Libra:"Law, diplomacy, design, fashion, judiciary.",Scorpio:"Research, occult, surgery, investigation.",Sagittarius:"Teaching, travel, law, exports, religion.",Capricorn:"Administration, civil services, mining, construction.",Aquarius:"Technology, social causes, aviation, NGOs.",Pisces:"Medicine, art, spirituality, poetry, psychology."};
+const HEALTH_MAP={Aries:"Head, brain. Guard against headaches, fevers.",Taurus:"Throat, neck. Watch for thyroid, throat infections.",Gemini:"Lungs, arms. Respiratory and nervous system care.",Cancer:"Chest, stomach. Digestive health and emotional stress.",Leo:"Heart, spine. Cardiovascular care essential.",Virgo:"Intestines, digestion. Diet and gut health vital.",Libra:"Kidneys, lower back. Hydration and rest essential.",Scorpio:"Reproductive organs. Detox and emotional release.",Sagittarius:"Hips, thighs, liver. Avoid excess; protect liver.",Capricorn:"Bones, joints, knees. Regular exercise prevents arthritis.",Aquarius:"Ankles, circulation. Keep blood pressure stable.",Pisces:"Feet, lymphatics. Avoid addictions; rest and hydrate."};
+const FINANCE_MAP={Aries:"Wealth through entrepreneurship. Avoid impulsive spending.",Taurus:"Strong accumulation. Property and asset investment favoured.",Gemini:"Multiple income streams. Focus on primary income.",Cancer:"Financial security through savings and real estate.",Leo:"Generous; wealth through leadership and speculation.",Virgo:"Methodical savings. Excellent accounting discipline.",Libra:"Partnerships bring wealth. Legal matters affect income.",Scorpio:"Hidden wealth, inheritance. Long-term investments strong.",Sagittarius:"Gains through travel, teaching, publishing.",Capricorn:"Steady wealth. Conservative investments yield long-term gains.",Aquarius:"Gains through technology and networking.",Pisces:"Intuitive with money; spiritual detachment brings gains."};
+const DASHA_PRED={Ketu:"Spiritual growth, isolation, past karma resolution. Unexpected changes.",Venus:"Luxury, relationships, creative success, financial gains.",Sun:"Authority, recognition, government support, health focus.",Moon:"Emotional sensitivity, home matters, travel, family.",Mars:"Energy, ambition, property matters, physical vitality.",Rahu:"Ambition, foreign travel, material gains, karmic experiences.",Jupiter:"Wisdom, expansion, marriage, children, spiritual growth.",Saturn:"Hard work, discipline, delays, karmic lessons, long-term success.",Mercury:"Education, communication, business, analytical thinking."};
+const GEMS={Sun:{gem:"Ruby",alt:"Red Garnet",r:"12 Mukhi",finger:"Ring finger, right hand"},Moon:{gem:"Pearl",alt:"Moonstone",r:"2 Mukhi",finger:"Little finger, right hand"},Mars:{gem:"Red Coral",alt:"Carnelian",r:"3 Mukhi",finger:"Ring finger, right hand"},Mercury:{gem:"Emerald",alt:"Green Tourmaline",r:"4 Mukhi",finger:"Little finger, right hand"},Jupiter:{gem:"Yellow Sapphire",alt:"Yellow Topaz",r:"5 Mukhi",finger:"Index finger, right hand"},Venus:{gem:"Diamond",alt:"White Sapphire",r:"6 Mukhi",finger:"Middle finger, right hand"},Saturn:{gem:"Blue Sapphire",alt:"Amethyst",r:"7 Mukhi",finger:"Middle finger, right hand"},Rahu:{gem:"Hessonite",alt:"Orange Zircon",r:"8 Mukhi",finger:"Middle finger, right hand"},Ketu:{gem:"Cat's Eye",alt:"Chrysoberyl",r:"9 Mukhi",finger:"Ring finger, right hand"}};
+const ASC_LORD=["Mars","Venus","Mercury","Moon","Sun","Mercury","Venus","Mars","Jupiter","Saturn","Saturn","Jupiter"];
+
+function rad(x){return x*Math.PI/180}
+function norm(x){return((x%360)+360)%360}
+function julianDay(date){
+  let y=date.getUTCFullYear(),m=date.getUTCMonth()+1;
+  let D=date.getUTCDate()+((date.getUTCHours()+date.getUTCMinutes()/60)/24);
+  if(m<3){y--;m+=12}
+  let A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+  return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+D+B-1524.5;
+}
+function sunLon(jd){
+  let T=(jd-2451545)/36525,L0=280.46646+36000.76983*T,M=357.52911+35999.05029*T;
+  return norm(L0+(1.914602-0.004817*T)*Math.sin(rad(M))+0.019993*Math.sin(rad(2*M))+0.000289*Math.sin(rad(3*M))-24.2);
+}
+function moonLon(jd){
+  let T=(jd-2451545)/36525,L0=218.3164477+481267.88123421*T,Mm=134.9633964+477198.8675055*T,D=297.8501921+445267.1114034*T;
+  return norm(L0+6.289*Math.sin(rad(Mm))+1.274*Math.sin(rad(2*D-Mm))+0.658*Math.sin(rad(2*D))+0.214*Math.sin(rad(2*Mm))+0.11*Math.sin(rad(D))-24.2);
+}
+function marsLon(jd){let T=(jd-2451545)/36525,L=355.433+19140.30*T,M=19.373+19140.30*T;return norm(L+10.691*Math.sin(rad(M))+0.623*Math.sin(rad(2*M))-24.2)}
+function mercLon(jd){let T=(jd-2451545)/36525,L=252.251+149472.675*T,M=168.627+149472.515*T;return norm(L+23.44*Math.sin(rad(M))+2.99*Math.sin(rad(2*M))-24.2)}
+function jupLon(jd){let T=(jd-2451545)/36525,L=34.351+3034.906*T,M=20.020+3034.906*T;return norm(L+5.555*Math.sin(rad(M))+0.168*Math.sin(rad(2*M))-24.2)}
+function venLon(jd){let T=(jd-2451545)/36525,L=181.979+58517.816*T,M=212.448+58517.803*T;return norm(L+0.741*Math.sin(rad(M))+0.022*Math.sin(rad(2*M))-24.2)}
+function satLon(jd){let T=(jd-2451545)/36525,L=50.077+1222.114*T,M=317.021+1222.114*T;return norm(L+6.404*Math.sin(rad(M))+0.623*Math.sin(rad(2*M))-24.2)}
+function rahuLon(jd){let T=(jd-2451545)/36525;return norm(125.0445-1934.1362*T-24.2)}
+function ascLon(jd,lat,lon){
+  let gst=((18.697374558+24.06570982441908*(jd-2451545))%24+24)%24,lst=((gst+lon/15)%24+24)%24;
+  let eps=23.4367,th=lst*15,A=Math.cos(rad(th)),B=-(Math.sin(rad(th))*Math.cos(rad(eps))+Math.tan(rad(lat))*Math.sin(rad(eps)));
+  return norm(Math.atan2(A,B)*180/Math.PI-24.2);
+}
+function isRetro(getLon,jd){
+  let a=getLon(jd-1),b=getLon(jd),d=b-a;if(d>180)d-=360;if(d<-180)d+=360;return d<0;
+}
+function dignity(pname,signIdx){
+  const d=DIGNITY[pname];if(!d)return'';
+  if(d.ex===signIdx)return'Exalted';if(d.db===signIdx)return'Debilitated';if(d.own.includes(signIdx))return'Own';return'';
+}
+
+function getAllPlanets(jd,lat,lon){
+  const asc=ascLon(jd,lat,lon);
+  const rahu=rahuLon(jd);
+  const lons={Sun:sunLon(jd),Moon:moonLon(jd),Mars:marsLon(jd),Mercury:mercLon(jd),Jupiter:jupLon(jd),Venus:venLon(jd),Saturn:satLon(jd),Rahu:rahu,Ketu:norm(rahu+180)};
+  const ascSign=Math.floor(asc/30)%12;
+  const planets=Object.entries(lons).map(([name,lon])=>{
+    const sign=Math.floor(lon/30)%12;
+    const house=((sign-ascSign+12)%12)+1;
+    const retro=['Mars','Mercury','Jupiter','Venus','Saturn'].includes(name)?isRetro({Mars:marsLon,Mercury:mercLon,Jupiter:jupLon,Venus:venLon,Saturn:satLon}[name],jd):false;
+    return{name,lon,sign,house,retro,deg:lon%30,dign:dignity(name,sign)};
+  });
+  return{planets,ascLon:asc,ascSign};
+}
+
+// ── Feature 1 & 2: Lagna + Navamsa Charts ────────────────────────────────────
+// Renders canvases at native device pixel density so kundli charts stay crisp on
+// retina phones, while keeping all the drawing math below in fixed 280x280 logical
+// units (CSS then scales the element fluidly via canvas{max-width:100%}).
+function setupHiDPICanvas(c,cssSize){
+  const dpr=window.devicePixelRatio||1;
+  c.style.width=cssSize+'px';c.style.height=cssSize+'px';
+  c.width=Math.round(cssSize*dpr);c.height=Math.round(cssSize*dpr);
+  const ctx=c.getContext('2d');
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  return ctx;
+}
+function drawNorthKundli(planets,ascSign,canvasId){
+  const c=document.getElementById(canvasId);if(!c)return;
+  const W=280,H=280,ctx=setupHiDPICanvas(c,W);
+  const isDark=document.body.className==='dark'||document.body.className==='oled';
+  ctx.fillStyle=isDark?'#1a1530':'#f8f6ff';ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle=isDark?'#4a3f6b':'#7c3aed';ctx.lineWidth=1.2;
+  const m=8,cx=W/2,cy=H/2,hx=(W-2*m)/2,hy=(H-2*m)/2;
+  // Outer square
+  ctx.strokeRect(m,m,W-2*m,H-2*m);
+  // Diagonals
+  [[m,m,W-m,H-m],[W-m,m,m,H-m]].forEach(([x1,y1,x2,y2])=>{ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke()});
+  // Inner diamond
+  ctx.beginPath();ctx.moveTo(cx,m);ctx.lineTo(W-m,cy);ctx.lineTo(cx,H-m);ctx.lineTo(m,cy);ctx.closePath();ctx.stroke();
+  // House centers for North Indian (12 triangular regions)
+  const HC=[[cx,cy-hy*.38],[cx+hx*.62,cy-hy*.38],[cx+hx*.78,cy],[cx+hx*.62,cy+hy*.62],[cx,cy+hy*.38],[cx-hx*.62,cy+hy*.62],[cx-hx*.78,cy],[cx-hx*.62,cy-hy*.38],[cx-hx*.28,cy-hy*.12],[cx,cy-hy*.15],[cx+hx*.28,cy-hy*.12],[cx,cy+hy*.12]];
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  for(let i=0;i<12;i++){
+    const signIdx=(ascSign+i)%12;
+    const[x,y]=HC[i];
+    ctx.font=`bold 9px system-ui`;ctx.fillStyle=isDark?'#9d8fc0':'#7c3aed';
+    ctx.fillText(SIGNS_S[signIdx],x,y-5);
+    ctx.font='7px system-ui';ctx.fillStyle=isDark?'#666':'#bbb';
+    ctx.fillText(`H${i+1}`,x,y+5);
+  }
+  // Planet labels
+  const hGroups={};
+  planets.forEach(p=>{const h=((p.sign-ascSign+12)%12);(hGroups[h]=hGroups[h]||[]).push((p.name.slice(0,2))+(p.retro?'℞':''))});
+  ctx.font='bold 8px system-ui';ctx.fillStyle='#f59e0b';
+  Object.entries(hGroups).forEach(([h,ps])=>{const[x,y]=HC[+h];ctx.fillText(ps.join(' '),x,y+16)});
+}
+
+function drawNavamsa(planets,ascSign,canvasId){
+  // D9: each sign = 9 navamsas of 3°20' each
+  const c=document.getElementById(canvasId);if(!c)return;
+  const W=280,H=280,ctx=setupHiDPICanvas(c,W);
+  const isDark=document.body.className==='dark'||document.body.className==='oled';
+  ctx.fillStyle=isDark?'#1a1530':'#f8f6ff';ctx.fillRect(0,0,W,H);
+  // South Indian 4x4 grid style for Navamsa
+  const GW=W/4,GH=H/4;
+  const GRID=[[0,1],[0,2],[0,3],[1,3],[2,3],[3,3],[3,2],[3,1],[3,0],[2,0],[1,0],[0,0]];
+  ctx.strokeStyle=isDark?'#4a3f6b':'#7c3aed';ctx.lineWidth=1;
+  for(let r=0;r<4;r++)for(let cc=0;cc<4;cc++){
+    if((r===1||r===2)&&(cc===1||cc===2))continue;
+    ctx.strokeRect(cc*GW,r*GH,GW,GH);
+  }
+  // Navamsa ascendant: same method applied to navamsa
+  const navAscSign=ascSign; // simplified — use same asc sign for display
+  // Place planets in navamsa signs
+  // Navamsa sign = (sign*9 + floor(deg/3.333)) % 12
+  const navPlanets=planets.map(p=>({...p,navSign:((p.sign*9+Math.floor(p.deg/3.3333))%12)}));
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  for(let si=0;si<12;si++){
+    const[r,cc]=GRID[si];const x=cc*GW,y=r*GH;
+    const isAsc=si===navAscSign;
+    ctx.font=`${isAsc?'bold ':' '}9px system-ui`;
+    ctx.fillStyle=isAsc?(isDark?'#c084fc':'#7c3aed'):(isDark?'#9d8fc0':'#6b5f87');
+    ctx.fillText(SIGNS_S[si],x+GW/2,y+8);
+    if(isAsc){ctx.font='7px system-ui';ctx.fillStyle='#7c3aed';ctx.fillText('Asc',x+GW/2,y+17)}
+    const here=navPlanets.filter(p=>p.navSign===si);
+    ctx.font='bold 8px system-ui';ctx.fillStyle='#f59e0b';ctx.textBaseline='middle';
+    here.forEach((p,pi)=>ctx.fillText(p.name.slice(0,2),x+GW/2,y+GH/2+(pi-here.length/2+.5)*10));
+  }
+}
+
+// ── Feature 3: Vimshottari Dasha ─────────────────────────────────────────────
+function calcDasha(moonL,birthDateStr){
+  const nakIdx=Math.min(Math.floor(moonL/(360/27)),26);
+  const lord=NAK_LORD[nakIdx];
+  const startIdx=DASHA.findIndex(d=>d.n===lord);
+  const nakPos=(moonL%(360/27))/(360/27);
+  const birth=new Date(birthDateStr);
+  const now=new Date();
+  const ageY=(now-birth)/(365.25*24*3600*1000);
+  const elapsed=nakPos*DASHA[startIdx].y;
+  const rows=[];let cursor=-elapsed;
+  for(let i=0;i<9;i++){
+    const d=DASHA[(startIdx+i)%9];
+    const start=cursor,end=cursor+d.y;
+    const isActive=ageY>=start&&ageY<end;
+    const pct=isActive?Math.round(((ageY-start)/d.y)*100):0;
+    rows.push({...d,start,end,isActive,pct,
+      sd:addYrs(birth,start),ed:addYrs(birth,end)});
+    cursor=end;
+  }
+  return rows;
+}
+function addYrs(date,yrs){
+  const d=new Date(date);
+  d.setFullYear(d.getFullYear()+Math.floor(yrs));
+  d.setDate(d.getDate()+Math.round((yrs%1)*365));
+  return d;
+}
+function fmtDate(d){return d&&!isNaN(d)?d.toLocaleDateString('en-IN',{year:'numeric',month:'short'}):'—'}
+function calcAntardasha(maha,birthDateStr){
+  const mi=DASHA.findIndex(d=>d.n===maha.n),birth=new Date(birthDateStr);
+  const now=new Date(),ageY=(now-birth)/(365.25*24*3600*1000);
+  let cur=maha.start;const rows=[];
+  for(let i=0;i<9;i++){const a=DASHA[(mi+i)%9],dur=(a.y/120)*maha.y;
+    const isActive=ageY>=cur&&ageY<cur+dur;
+    rows.push({n:a.n,start:cur,end:cur+dur,isActive,sd:addYrs(birth,cur),ed:addYrs(birth,cur+dur)});cur+=dur}
+  return rows;
+}
+
+// ── Feature 4: Sade Sati ──────────────────────────────────────────────────────
+function calcSadeSati(moonSignIdx){
+  const jdNow=julianDay(new Date());
+  const satNow=Math.floor(satLon(jdNow)/30)%12;
+  const phases=[(moonSignIdx+11)%12,moonSignIdx,(moonSignIdx+1)%12];
+  const pi=phases.indexOf(satNow);
+  return{present:pi>=0,phase:["Rising","Peak","Setting"][pi]||'',satSign:SIGNS[satNow]};
+}
+
+// ── Feature 5 & 6: Manglik & Kaal Sarp ───────────────────────────────────────
+function calcManglik(planets){
+  const mars=planets.find(p=>p.name==='Mars');
+  if(!mars)return{present:false};
+  const badHouses=[1,2,4,7,8,12];const present=badHouses.includes(mars.house);
+  const severity=mars.house===7||mars.house===8?'High':mars.house===1||mars.house===4?'Medium':'Low';
+  return{present,severity,house:mars.house};
+}
+function calcKaalSarp(planets){
+  const rahu=planets.find(p=>p.name==='Rahu'),ketu=planets.find(p=>p.name==='Ketu');
+  if(!rahu||!ketu)return{present:false};
+  const main=planets.filter(p=>!['Rahu','Ketu'].includes(p.name));
+  const rahuL=rahu.lon,ketuL=ketu.lon;
+  const allBetween=main.every(p=>{
+    const lo=Math.min(rahuL,ketuL),hi=Math.max(rahuL,ketuL);
+    return hi-lo<180?p.lon>=lo&&p.lon<=hi:p.lon<=lo||p.lon>=hi;
+  });
+  // KS type by Rahu sign
+  const ksNames=["Anant","Kulik","Vasuki","Shankhpal","Padma","Mahapadma","Takshak","Karkotak","Shankhachud","Ghatak","Vishdhar","Sheshnag"];
+  return{present:allBetween,type:ksNames[rahu.sign]||'',rahuSign:SIGNS[rahu.sign],ketuSign:SIGNS[ketu.sign]};
+}
+
+// ── Feature 7 & 8: Guna Milan (36 points) ────────────────────────────────────
+const NAK_GANA=[0,2,1,0,0,2,0,0,2,2,2,0,0,2,0,0,0,2,2,2,0,0,2,0,0,0,0]; // 0=Dev 1=Manav 2=Rakshasa
+const NAK_NADI=[0,1,2,2,1,0,0,1,2,0,1,2,2,1,0,0,1,2,0,1,2,2,1,0,0,1,2]; // 0=Aadi 1=Madhya 2=Antya
+function gunaScore(nakA,nakB,moonA,moonB){
+  const scores=[];
+  // 1. Varna (1)
+  const varna=[1,2,3,4,4,3,2,1,1,2,3,4];
+  scores.push({name:"Varna",score:varna[Math.floor(moonA/30)%12]<=varna[Math.floor(moonB/30)%12]?1:0,max:1});
+  // 2. Vashya (2)
+  scores.push({name:"Vashya",score:Math.abs((Math.floor(moonA/30)%12)-(Math.floor(moonB/30)%12))<=1?2:0,max:2});
+  // 3. Tara (3)
+  const tara=((nakB-nakA+27)%27);const taraNum=(tara%9)+1;
+  scores.push({name:"Tara",score:[1,3,4,6,7,9].includes(taraNum)?3:Math.floor(3/2),max:3});
+  // 4. Yoni (4) - simplified
+  const yoniAnimal=[0,1,2,3,4,5,6,7,8,9,10,11,12,0,1,2,3,4,5,6,7,8,9,10,11,12,12];
+  scores.push({name:"Yoni",score:Math.abs(yoniAnimal[nakA]-yoniAnimal[nakB])<3?4:2,max:4});
+  // 5. Graha Maitri (5)
+  scores.push({name:"Graha Maitri",score:Math.floor(moonA/30)%6===Math.floor(moonB/30)%6?5:3,max:5});
+  // 6. Gana (6)
+  const gA=NAK_GANA[nakA],gB=NAK_GANA[nakB];
+  scores.push({name:"Gana",score:gA===gB?6:Math.abs(gA-gB)===1?3:0,max:6});
+  // 7. Bhakoot (7)
+  const diff=((Math.floor(moonB/30)%12)-(Math.floor(moonA/30)%12)+12)%12;
+  scores.push({name:"Bhakoot",score:[1,3,5,7,9,11].includes(diff)?7:0,max:7});
+  // 8. Nadi (8)
+  scores.push({name:"Nadi",score:NAK_NADI[nakA]!==NAK_NADI[nakB]?8:0,max:8});
+  const total=scores.reduce((a,s)=>a+s.score,0);
+  return{scores,total};
+}
+
+// ── Feature 9: Panchang ───────────────────────────────────────────────────────
+function calcPanchang(jd,moonL,sunL){
+  const diff=norm(moonL-sunL);
+  let tithi=Math.floor(diff/12)+1;if(tithi>30)tithi=30;
+  const yoga=Math.floor(norm(moonL+sunL)/(360/27))%27;
+  const karana=Math.floor(diff/6)%11;
+  const weekday=Math.floor(jd+1.5)%7;
+  const nakIdx=Math.min(Math.floor(moonL/(360/27)),26);
+  return{tithiName:TITHI_N[tithi-1],yogaName:YOGA_N[yoga],karanaName:KARANA_N[karana],vara:VARA_N[weekday],varaLord:VARA_LORD[weekday],nakName:NAK[nakIdx],nakLord:NAK_LORD[nakIdx],weekday};
+}
+
+// ── Feature 10: Rahu Kalam & Yamaganda ───────────────────────────────────────
+function calcRahuKalam(weekday){
+  const fmt=h=>{const hh=Math.floor(h),mm=Math.round((h-hh)*60);return`${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}`};
+  const offset=RAHU_K[weekday]-1,start=6+(offset*1.5),end=start+1.5;
+  // Yamaganda: Sun offset table
+  const yamOff=[5,4,3,2,1,0,7]; // Sun Mon...Sat
+  const yStart=6+(yamOff[weekday]*1.5),yEnd=yStart+1.5;
+  return{rahuStart:fmt(start),rahuEnd:fmt(end),yamStart:fmt(yStart),yamEnd:fmt(yEnd)};
+}
+
+// ── Feature 11: Choghadiya ────────────────────────────────────────────────────
+function calcChoghadiya(weekday){
+  const now=new Date(),currentH=now.getHours()+now.getMinutes()/60;
+  const fmt=h=>{const hh=Math.floor(h),mm=Math.round((h-hh)*60);return`${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}`};
+  return CHOG_DAY[weekday].map((s,i)=>{
+    const st=6+(i*1.5),en=st+1.5,active=currentH>=st&&currentH<en;
+    return{...s,time:`${fmt(st)}–${fmt(en)}`,active};
+  });
+}
+
+// ── Feature 12: Ashtakavarga ──────────────────────────────────────────────────
+function calcAshtakavarga(planets){
+  const pNames=["Sun","Moon","Mars","Mercury","Jupiter","Venus","Saturn"];
+  // Sarvashtakavarga: sum of all 7 planets' contributions per house
+  const sarva=Array(12).fill(0);
+  planets.filter(p=>pNames.includes(p.name)).forEach(p=>{
+    const base=AVG_BASE[p.name];
+    for(let h=0;h<12;h++){
+      const relH=(h-p.sign+12)%12;
+      sarva[h]+=base[relH]||0;
+    }
+  });
+  return sarva;
+}
+
+// ── Feature 13 & 14: Career/Finance/Health ────────────────────────────────────
+// (using moon sign + 10th house lord)
+
+// ── Feature 15: PDF builder ───────────────────────────────────────────────────
+// (kept from previous version — see saveAsPDF below)
+
+// ── MAIN CALC ─────────────────────────────────────────────────────────────────
+let G={};
+async function calcAstro(){
+  const out=document.getElementById('out');
+  if(!(await isEntitled())){
+    setLicenseCardOpen(true);
+    document.getElementById('licenseCard').scrollIntoView({behavior:'smooth'});
+    showLicenseMsg('🔒 Your free trial has ended — activate a license to generate your Kundli.','#dc2626');
+    return;
+  }
+  try {
+  const n=document.getElementById('name').value||'Unknown';
+  const d=document.getElementById('dob').value,t=document.getElementById('tob').value;
+  if(!d){alert('Enter birth date');return}
+  if(!t)t='12:00';
+  const sel=document.getElementById('place'),cityData=sel.value.split('|');
+  const p=sel.options[sel.selectedIndex].text,lat=parseFloat(cityData[1]),lon=parseFloat(cityData[2]);
+  const tzOffset=cityData[3]!==undefined?parseFloat(cityData[3]):(lon/15); // hours east of UTC; falls back to a longitude estimate for custom entries
+  // Parse date/time parts explicitly (avoids the browser's own local timezone leaking in),
+  // then subtract the birth city's UTC offset so the clock time entered is treated as LOCAL
+  // time at that city, not as UTC. Ascendant/houses shift ~1° every 4 minutes, so getting
+  // this conversion right is essential — a few hours of error here can put the Ascendant
+  // in the wrong sign entirely.
+  const [dy,dm,dd2] = d.split('-').map(Number);
+  const [th,tm] = t.split(':').map(Number);
+  const localAsUTCms = Date.UTC(dy, dm-1, dd2, th, tm);
+  const birthUTC = new Date(localAsUTCms - tzOffset*3600*1000);
+  const jd=julianDay(birthUTC);
+  const{planets,ascLon:asc,ascSign}=getAllPlanets(jd,lat,lon);
+  const moonL=planets.find(x=>x.name==='Moon').lon;
+  const sunL=planets.find(x=>x.name==='Sun').lon;
+  const moonSign=SIGNS[Math.floor(moonL/30)%12];
+  const sunSign=SIGNS[Math.floor(sunL/30)%12];
+  const ascSignName=SIGNS[ascSign];
+  const nakIdx=Math.min(Math.floor(moonL/(360/27)),26);
+  const nakName=NAK[nakIdx];
+
+  const panchang=calcPanchang(jd,moonL,sunL);
+  const dasha=calcDasha(moonL,d);
+  const manglik=calcManglik(planets);
+  const kaalSarp=calcKaalSarp(planets);
+  const sadeSati=calcSadeSati(Math.floor(moonL/30)%12);
+  const timings=calcRahuKalam(panchang.weekday);
+  const chog=calcChoghadiya(panchang.weekday);
+  const avarga=calcAshtakavarga(planets);
+  const ascLord=ASC_LORD[ascSign];
+  const moonNakLord=NAK_LORD[nakIdx];
+  const life=((n.replace(/\s/g,'').length+(Math.floor(norm(moonL-sunL)/12)+1))%9)||9;
+
+  // Compatibility
+  let compat=null;
+  const pname=document.getElementById('partner').value;
+  const pdob=document.getElementById('pdob').value;
+  if(pname&&pdob){
+    const pjd=julianDay(new Date(pdob+'T12:00'));
+    const pMoonL=moonLon(pjd);
+    const pNakIdx=Math.min(Math.floor(pMoonL/(360/27)),26);
+    compat={...gunaScore(nakIdx,pNakIdx,moonL,pMoonL),personA:n,personB:pname,moonA:moonSign,moonB:SIGNS[Math.floor(pMoonL/30)%12]};
+  }
+
+  G={planets,ascSign,ascSignName,moonSign,sunSign,nakName,dasha,compat,d,n,p,lat,lon,life,ascLord,moonNakLord,manglik,kaalSarp,sadeSati,avarga,panchang,timings,chog,jd,tzOffset};
+
+  let coordsTag='';
+  try{const g=await fetch('https://ipapi.co/json/').then(r=>r.json());if(g.city)coordsTag=`<span class="tag">📍 ${g.city}, ${g.country_name}</span>`}catch{}
+
+  out.innerHTML=`
+  ${renderSummary(n,p,lat,lon,coordsTag,sunSign,moonSign,ascSignName,nakName,panchang,life,tzOffset)}
+  ${renderPlanets(planets)}
+  ${renderCharts()}
+  ${renderDasha(dasha,d)}
+  ${renderDosha(manglik,kaalSarp,sadeSati)}
+  ${renderPanchang(panchang,timings)}
+  ${renderChoghadiya(chog)}
+  ${renderAshtakavarga(avarga)}
+  ${compat?renderCompat(compat):''}
+  ${renderCareer(moonSign,sunSign,planets,ascSign)}
+  ${renderGems(ascLord,moonNakLord)}
+  `;
+
+  document.getElementById('exportCard').style.display='block';
+  setTimeout(()=>{
+    drawNorthKundli(planets,ascSign,'lagnaCanvas');
+    drawNavamsa(planets,ascSign,'navamsaCanvas');
+  },60);
+  } catch(err){
+    console.error('Kundli error:',err);
+    out.innerHTML='<div class="result" style="color:var(--danger)">⚠️ '+err.message+'<br><small>Check your birth details and try again.</small></div>';
+  }
+}
+
+// ── Render sections ───────────────────────────────────────────────────────────
+function renderSummary(n,p,lat,lon,coordsTag,sun,moon,asc,nak,pc,life,tzOffset){
+  const tzH=Math.trunc(tzOffset),tzM=Math.round((Math.abs(tzOffset)%1)*60);
+  const tzLabel=`UTC${tzOffset>=0?'+':'-'}${Math.abs(tzH)}${tzM?':'+String(tzM).padStart(2,'0'):''}`;
+  return`<div class="sec"><div class="sec-title">🪐 Birth Analysis</div>
+  <span class="tag">👤 ${n}</span><span class="tag">🌍 ${p}</span>
+  <span class="tag">📌 ${lat.toFixed(2)}°, ${lon.toFixed(2)}°</span>
+  <span class="tag">🕐 ${tzLabel}</span>${coordsTag}<hr>
+  <b>☀️ Sun Sign:</b> ${sun}<br><b>🌙 Moon Sign:</b> ${moon}<br>
+  <b>⬆️ Ascendant:</b> ${asc}<br><b>⭐ Nakshatra:</b> ${nak} (Lord: ${pc.nakLord})<br>
+  <b>📅 Tithi:</b> ${pc.tithiName}<br><b>🧘 Yoga:</b> ${pc.yogaName}<br>
+  <b>🔢 Destiny Number:</b> ${life}</div>`;
+}
+
+function renderPlanets(planets){
+  const rows=planets.map(p=>{
+    const dign=p.dign;
+    const cls=dign==='Exalted'?'good':dign==='Debilitated'?'danger':dign==='Own'?'warn':'';
+    const seed=Math.sin(p.lon*0.137)*10000,str=Math.floor(((seed-Math.floor(seed))*50)+30);
+    return`<div style="display:flex;align-items:center;gap:7px;margin-bottom:8px;font-size:.85rem">
+      <span style="min-width:62px;font-weight:700">${p.name}</span>
+      <span style="min-width:50px;color:var(--muted);font-size:.75rem">${SIGNS_S[p.sign]} ${p.deg.toFixed(1)}°</span>
+      <span style="min-width:24px;font-size:.75rem;color:var(--muted)">H${p.house}</span>
+      ${dign?`<span class="tag ${cls}" style="padding:2px 7px;font-size:.7rem">${dign}</span>`:''}
+      ${p.retro?`<span class="tag danger" style="padding:2px 7px;font-size:.7rem">℞</span>`:''}
+      <div class="bar-wrap" style="flex:1"><div class="bar-fill" style="width:${str}%"></div></div>
+    </div>`;
+  }).join('');
+  return`<div class="sec"><div class="sec-title">🌟 Planets & Degrees</div>${rows}</div>`;
+}
+
+function renderCharts(){
+  return`<div class="sec"><div class="sec-title">🗺️ Birth Charts</div>
+  <div class="tabs" id="chartTabs">
+    <button class="btn-sm active" onclick="switchChart('lagna',this)">D1 Lagna</button>
+    <button class="btn-sm" onclick="switchChart('navamsa',this)">D9 Navamsa</button>
+  </div>
+  <canvas id="lagnaCanvas" width="280" height="280"></canvas>
+  <canvas id="navamsaCanvas" width="280" height="280" style="display:none"></canvas>
+  </div>`;
+}
+
+function switchChart(type,btn){
+  document.getElementById('lagnaCanvas').style.display=type==='lagna'?'block':'none';
+  document.getElementById('navamsaCanvas').style.display=type==='navamsa'?'block':'none';
+  document.querySelectorAll('#chartTabs .btn-sm').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(type==='lagna')drawNorthKundli(G.planets,G.ascSign,'lagnaCanvas');
+  else drawNavamsa(G.planets,G.ascSign,'navamsaCanvas');
+}
+
+function renderDasha(dasha,birthDate){
+  const rows=dasha.map(d=>{
+    const ad=d.isActive?calcAntardasha(d,birthDate):[];
+    return`<div class="tl-item${d.isActive?' cur':''}">
+      <div class="tl-lord">${d.n} Mahadasha ${d.isActive?'<span class="tag good" style="padding:1px 7px;font-size:.7rem">Active</span>':''}</div>
+      <div class="tl-dates">${fmtDate(d.sd)} – ${fmtDate(d.ed)} (${d.y} yrs)</div>
+      ${d.isActive?`<div class="bar-wrap"><div class="bar-fill" style="width:${d.pct}%"></div></div>`:''}
+      <div class="tl-pred">${DASHA_PRED[d.n]||''}</div>
+      ${ad.length?`<div style="margin:6px 0 0 10px;border-left:2px solid var(--border);padding-left:8px">
+        ${ad.map(a=>`<div style="font-size:.76rem;padding:2px 0;${a.isActive?'color:var(--acc);font-weight:700':'color:var(--muted)'}">
+          ${a.isActive?'▶ ':''}${a.n}: ${fmtDate(a.sd)}–${fmtDate(a.ed)}</div>`).join('')}
+      </div>`:''}
+    </div>`;
+  }).join('');
+  return`<div class="sec"><div class="sec-title">🕰️ Vimshottari Dasha</div><div class="tl">${rows}</div></div>`;
+}
+
+function renderDosha(manglik,kaalSarp,sadeSati){
+  return`<div class="sec"><div class="sec-title">⚠️ Dosha Analysis</div>
+  <div class="result">
+    <b>🔴 Manglik Dosha:</b> <span class="tag ${manglik.present?'danger':'good'}">${manglik.present?`Present – ${manglik.severity} (H${manglik.house})`:'Absent'}</span><br>
+    ${manglik.present?'Mars in house '+manglik.house+'. Consider remedies before marriage. Consult a Jyotishi.':'No Manglik dosha. Marriage prospects are smooth.'}<br><br>
+    <b>🐍 Kaal Sarp Dosha:</b> <span class="tag ${kaalSarp.present?'danger':'good'}">${kaalSarp.present?`Present – ${kaalSarp.type}`:'Absent'}</span><br>
+    ${kaalSarp.present?`All planets between Rahu (${kaalSarp.rahuSign}) and Ketu (${kaalSarp.ketuSign}). Perform Kaal Sarp Puja.`:'Kaal Sarp Dosha not detected.'}<br><br>
+    <b>🪐 Sade Sati:</b> <span class="tag ${sadeSati.present?'warn':'good'}">${sadeSati.present?`Active – ${sadeSati.phase} Phase`:'Not Active'}</span><br>
+    ${sadeSati.present?`Saturn in ${sadeSati.satSign}. Karmic lessons period. Stay disciplined and patient.`:`Saturn not transiting 12th/1st/2nd from Moon.`}
+  </div></div>`;
+}
+
+function renderPanchang(pc,timings){
+  return`<div class="sec"><div class="sec-title">📆 Panchang</div>
+  <div class="result">
+    <b>Vara:</b> ${pc.vara} (Lord: ${pc.varaLord})<br>
+    <b>Tithi:</b> ${pc.tithiName}<br>
+    <b>Nakshatra:</b> ${pc.nakName} (Lord: ${pc.nakLord})<br>
+    <b>Yoga:</b> ${pc.yogaName}<br>
+    <b>Karana:</b> ${pc.karanaName}<hr>
+    <b>⛔ Rahu Kalam:</b> ${timings.rahuStart} – ${timings.rahuEnd}<br>
+    <b>⛔ Yamaganda:</b> ${timings.yamStart} – ${timings.yamEnd}<br>
+    <small>Avoid important activities during these windows.</small>
+  </div></div>`;
+}
+
+function renderChoghadiya(chog){
+  const cells=chog.map(s=>`<div class="chog-cell ${s.q==='good'?'chog-good':s.q==='bad'?'chog-bad':'chog-mid'}${s.active?' cur':''}">
+    <div style="font-weight:700">${s.n}</div><div style="font-size:.65rem">${s.time}</div>
+  </div>`).join('');
+  return`<div class="sec"><div class="sec-title">⏱️ Choghadiya</div>
+  <div class="chog-grid">${cells}</div>
+  <small style="color:var(--muted);display:block;margin-top:6px">Current slot highlighted. Labh, Amrit, Shubh, Char = Auspicious.</small>
+  </div>`;
+}
+
+function renderAshtakavarga(avarga){
+  const cells=avarga.map((v,i)=>`<div class="avarga-cell" style="background:${v>=28?'color-mix(in srgb,var(--good) 15%,transparent)':v<=20?'color-mix(in srgb,var(--danger) 10%,transparent)':'var(--border)'}">
+    <div class="hn">H${i+1}</div><div class="hs">${v}</div>
+  </div>`).join('');
+  return`<div class="sec"><div class="sec-title">🔢 Ashtakavarga</div>
+  <div class="avarga-grid">${cells}</div>
+  <small style="color:var(--muted);display:block;margin-top:6px">Green = Strong (28+). Red = Weak (≤20). Sarvashtakavarga total scores per house.</small>
+  </div>`;
+}
+
+function renderCompat({scores,total,personA,personB,moonA,moonB}){
+  const level=total>=28?'Excellent':total>=21?'Good':total>=18?'Average':'Below Average';
+  const cls=total>=28?'good':total>=21?'warn':'danger';
+  const rows=scores.map(s=>`<div class="guna-row"><span>${s.name}</span><div class="bar-wrap" style="flex:1;margin:0 8px"><div class="bar-fill" style="width:${(s.score/s.max)*100}%"></div></div><span>${s.score}/${s.max}</span></div>`).join('');
+  return`<div class="sec"><div class="sec-title">💑 Kundli Matching</div>
+  <div class="score-ring"><span class="sn">${total}</span><span class="sl">/ 36 Gunas</span></div>
+  <div style="text-align:center;margin-bottom:8px"><span class="tag ${cls}">${level}</span></div>
+  <div class="result"><b>${personA}</b> (${moonA}) × <b>${personB}</b> (${moonB})<br><br>${rows}
+  <hr><small>18+ Acceptable · 24+ Good · 28+ Excellent match.</small></div></div>`;
+}
+
+function renderCareer(moonSign,sunSign,planets,ascSign){
+  const h10Sign=(ascSign+9)%12,h10Lord=ASC_LORD[h10Sign];
+  return`<div class="sec"><div class="sec-title">💼 Career, Finance & Health</div>
+  <div class="result">
+    <b>💼 Career (Moon: ${moonSign}):</b><br>${CAREER_MAP[moonSign]||''}<br><br>
+    <b>💰 Finance (Sun: ${sunSign}):</b><br>${FINANCE_MAP[sunSign]||''}<br><br>
+    <b>🏠 10th House (Career Lord):</b> ${SIGNS[h10Sign]} — Lord: ${h10Lord}<br><br>
+    <b>🩺 Health (Moon: ${moonSign}):</b><br>${HEALTH_MAP[moonSign]||''}
+  </div></div>`;
+}
+
+function renderGems(ascLord,nakLord){
+  const pri=GEMS[ascLord],sec=GEMS[nakLord];
+  const gemCard=(lord,g,label)=>g?`<div class="gem-card">
+    <div class="gem-name">💎 ${label} — ${lord}</div>
+    <b>Gemstone:</b> ${g.gem} &nbsp;|&nbsp; <b>Alt:</b> ${g.alt}<br>
+    <b>Finger:</b> ${g.finger}<br>
+    <b>Rudraksha:</b> ${g.r} Mukhi
+  </div>`:'';
+  return`<div class="sec"><div class="sec-title">💎 Gemstone & Rudraksha</div>
+  ${gemCard(ascLord,pri,'Primary (Ascendant Lord)')}
+  ${gemCard(nakLord,sec,'Secondary (Nakshatra Lord)')}
+  <small style="color:var(--muted);display:block;margin-top:4px">Consult a certified Jyotishi before wearing gemstones.</small>
+  </div>`;
+}
+
+// ── Export helpers ────────────────────────────────────────────────────────────
+function getFormMeta(){
+  const sel=document.getElementById('place');
+  return{name:document.getElementById('name').value||'Unknown',dob:document.getElementById('dob').value,tob:document.getElementById('tob').value,place:sel.options[sel.selectedIndex].text,now:new Date().toLocaleString('en-IN')};
+}
+function downloadBlob(blob,filename){
+  const url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download=filename;document.body.appendChild(a);a.click();
+  document.body.removeChild(a);setTimeout(()=>URL.revokeObjectURL(url),2000);
+}
+function getReportText(){
+  const tmp=document.createElement('div');tmp.innerHTML=document.getElementById('out').innerHTML;
+  tmp.querySelectorAll('br').forEach(el=>el.replaceWith('\n'));
+  tmp.querySelectorAll('h2,h3,.sec-title,hr,div,p').forEach(el=>{el.before('\n');el.after('\n')});
+  return tmp.innerText.replace(/\n{3,}/g,'\n\n').trim();
+}
+function saveAsText(){
+  const out=document.getElementById('out');
+  if(!out||!out.innerHTML.trim()){alert('Generate a Kundli first.');return}
+  const{name,dob,tob,place,now}=getFormMeta();
+  const SEP='════════════════════════════════════════';
+  const text=[SEP,'        DHRUVA — KUNDLI REPORT','   Premium Vedic Astrology',SEP,
+    `Name      : ${name}`,`Date      : ${dob}`,`Time      : ${tob}`,`Place     : ${place}`,`Generated : ${now}`,
+    SEP,'',getReportText(),'',SEP,
+    `© Manik Roy ${new Date().getFullYear()}. All Rights Reserved.`,SEP].join('\n');
+  downloadBlob(new Blob([text],{type:'text/plain;charset=utf-8'}),`Dhruva_Kundli_${name.replace(/\s+/g,'_')}_${dob}.txt`);
+}
+
+function saveAsPDF(){
+  const out=document.getElementById('out');
+  if(!out||!out.innerHTML.trim()){alert('Generate a Kundli first.');return}
+  const{name,dob,tob,place,now}=getFormMeta();
+  const yr=new Date().getFullYear();
+  const tmp=document.createElement('div');tmp.innerHTML=out.innerHTML;
+  tmp.querySelectorAll('br').forEach(el=>el.replaceWith('\n'));
+  tmp.querySelectorAll('.sec-title,h2,h3').forEach(el=>{el.before('\n##'+el.innerText+'\n');el.remove()});
+  tmp.querySelectorAll('hr').forEach(el=>el.replaceWith('\n---\n'));
+  const rawLines=(tmp.innerText||tmp.textContent).split('\n').map(l=>l.trim()).filter(l=>l);
+  // Strip emoji/pictographic symbols and normalize punctuation so PDF text (WinAnsi/Helvetica)
+  // renders cleanly instead of as "?" glyphs, and so column-width math matches what's drawn.
+  function clean(s){
+    return s.replace(/[\u{1F1E6}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{2190}-\u{21FF}\u{FE0F}\u{200D}\u{2022}]/gu,'')
+      .replace(/[–—]/g,'-')
+      .replace(/℞/g,'(R)')
+      .replace(/▶/g,'>')
+      .replace(/°/g,' deg')
+      .replace(/©/g,'(c)')
+      .replace(/[×✕]/g,'x')
+      .replace(/\s{2,}/g,' ')
+      .trim();
+  }
+  const cL=[];
+  cL.push({t:'TITLE',s:'DHRUVA'});cL.push({t:'SUB',s:'Premium Vedic Astrology'});
+  cL.push({t:'META',s:`Name: ${name}`});cL.push({t:'META',s:`Date: ${dob}   Time: ${tob}`});
+  cL.push({t:'META',s:`Place: ${place}`});cL.push({t:'META',s:`Generated: ${now}`});cL.push({t:'RULE'});
+  rawLines.forEach(rl=>{
+    const l=clean(rl);
+    if(!l)return;
+    if(rl.startsWith('##'))cL.push({t:'HEAD',s:clean(rl.replace(/^##/,''))});
+    else if(rl==='---')cL.push({t:'RULE'});
+    else if(l.includes(':')&&l.length<90)cL.push({t:'KEY',s:l});
+    else cL.push({t:'BODY',s:l});
+  });
+  cL.push({t:'RULE'});cL.push({t:'FOOT',s:clean(`(c) Manik Roy ${yr}. All Rights Reserved.`)});
+  const W=595,H=842,ML=50,MR=50,MT=50,MB=40,TW=W-ML-MR;
+  const objects=[];
+  function addObj(content){const id=objects.length+1;objects.push({id,content});return id}
+  function ps(s){return s.replace(/[^\x20-\x7E]/g,'?').replace(/\\/g,'\\\\').replace(/\(/g,'\\(').replace(/\)/g,'\\)')}
+  function wrap(text,maxW,cw){const words=text.split(' ');const lines=[];let cur='';words.forEach(w=>{const test=cur?cur+' '+w:w;if(test.length*cw>maxW&&cur){lines.push(cur);cur=w}else cur=test});if(cur)lines.push(cur);return lines.length?lines:['']}
+  const pageIds=[];let stream='',y=H-MT;
+  const LH=14,LHH=16,LHM=13;
+  function newPage(){if(stream){const sid=addObj(`<< /Length ${stream.length} >>\nstream\n${stream}\nendstream`);const pid=addObj(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${W} ${H}] /Contents ${sid} 0 R /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> >>`);pageIds.push(pid)}stream='';y=H-MT}
+  function chkY(n){if(y-n<MB)newPage()}
+  function txt(s,x,yy,sz,b){stream+=`BT /${b?'F2':'F1'} ${sz} Tf ${x} ${yy} Td (${ps(s)}) Tj ET\n`}
+  function rect(x,yy,w,h,r,g,b){stream+=`${r} ${g} ${b} rg ${x} ${yy} ${w} ${h} re f\n0 0 0 rg\n`}
+  function line(x1,y1,x2,y2){stream+=`0.7 0.7 0.8 RG 0.5 w ${x1} ${y1} m ${x2} ${y2} l S 0 0 0 RG\n`}
+  stream='';rect(0,H-70,W,70,0.486,0.227,0.929);
+  txt('DHRUVA',ML,H-32,24,true);txt('Premium Vedic Astrology  |  Kundli Report',ML,H-52,10,false);y=H-85;
+  cL.forEach(cl=>{
+    if(cl.t==='TITLE'||cl.t==='SUB')return;
+    if(cl.t==='RULE'){chkY(10);line(ML,y,W-MR,y);y-=8;return}
+    if(cl.t==='HEAD'){
+      const hLines=wrap(cl.s,TW-8,6.2),hH=LHH*hLines.length+4;
+      chkY(hH);
+      stream+=`0.486 0.227 0.929 rg ${ML} ${y-hH+4} ${TW} ${hH} re f 1 1 1 rg\n`;
+      hLines.forEach((wl,wi)=>txt(wl,ML+4,y-LHH*(wi+1)+6,10,true));
+      stream+=`0 0 0 rg\n`;y-=(hH+4);return;
+    }
+    if(cl.t==='META'){chkY(LHM);txt(cl.s,ML,y-LHM+3,9,false);y-=LHM;return}
+    if(cl.t==='KEY'){const col=cl.s.indexOf(':');if(col>0){const k=cl.s.slice(0,col+1),v=cl.s.slice(col+1).trim(),kw=k.length*5.6+4;wrap(v,TW-kw,5.5).forEach((vl,vi)=>{chkY(LH);if(vi===0){stream+=`0.361 0.149 0.580 rg\n`;txt(k,ML,y-LH+3,9,true);stream+=`0 0 0 rg\n`;txt(vl,ML+kw+4,y-LH+3,9,false)}else txt(vl,ML+kw+4,y-LH+3,9,false);y-=LH})}else{chkY(LH);txt(cl.s,ML,y-LH+3,9,false);y-=LH}return}
+    if(cl.t==='FOOT'){chkY(11);stream+=`0.6 0.6 0.6 rg\n`;txt(cl.s,ML,y-11+3,8,false);stream+=`0 0 0 rg\n`;y-=11;return}
+    wrap(cl.s,TW,5.5).forEach(wl=>{chkY(LH);txt(wl,ML,y-LH+3,9,false);y-=LH});
+  });
+  newPage();
+  const F1=3,F2=4;const resRef=`/Resources << /Font << /F1 ${F1} 0 R /F2 ${F2} 0 R >> >>`;
+  const pdfObjs=[];let nextId=5;
+  const csIds=[];
+  objects.forEach(o=>{if(o.content.startsWith('<< /Length')){pdfObjs.push({id:nextId,raw:`${nextId} 0 obj\n${o.content}\nendobj\n`});csIds.push(nextId);nextId++}});
+  const fpIds=[];
+  csIds.forEach(csid=>{const pid=nextId;pdfObjs.push({id:pid,raw:`${pid} 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${W} ${H}] /Contents ${csid} 0 R ${resRef} >>\nendobj\n`});fpIds.push(pid);nextId++});
+  const kids=fpIds.map(id=>`${id} 0 R`).join(' ');
+  let pdf='%PDF-1.4\n';const off={};
+  function wo(id,body){off[id]=pdf.length;pdf+=`${id} 0 obj\n${body}\nendobj\n`}
+  wo(1,`<< /Type /Catalog /Pages 2 0 R >>`);wo(2,`<< /Type /Pages /Kids [${kids}] /Count ${fpIds.length} >>`);
+  wo(F1,`<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>`);
+  wo(F2,`<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>`);
+  pdfObjs.forEach(o=>{off[o.id]=pdf.length;pdf+=o.raw});
+  const xp=pdf.length,allIds=[1,2,F1,F2,...pdfObjs.map(o=>o.id)].sort((a,b)=>a-b),maxId=Math.max(...allIds);
+  pdf+=`xref\n0 ${maxId+1}\n0000000000 65535 f \n`;
+  for(let i=1;i<=maxId;i++)pdf+=off[i]!==undefined?String(off[i]).padStart(10,'0')+' 00000 n \n':'0000000000 65535 f \n';
+  pdf+=`trailer\n<< /Size ${maxId+1} /Root 1 0 R >>\nstartxref\n${xp}\n%%EOF`;
+  const bytes=new Uint8Array(pdf.length);
+  for(let i=0;i<pdf.length;i++)bytes[i]=pdf.charCodeAt(i)&0xff;
+  downloadBlob(new Blob([bytes],{type:'application/pdf'}),`Dhruva_Kundli_${name.replace(/\s+/g,'_')}_${dob}.pdf`);
+}
+
+renderProfiles();
+refreshLicenseUI();
+
+// ── PWA: service worker + install prompt ────────────────────────────────────
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('./sw.js').catch(err=>console.warn('SW registration failed:',err));
+  });
+}
+let deferredInstallPrompt=null;
+window.addEventListener('beforeinstallprompt',(e)=>{
+  e.preventDefault();
+  deferredInstallPrompt=e;
+  const card=document.getElementById('installCard');
+  if(card && !window.matchMedia('(display-mode: standalone)').matches) card.style.display='block';
+});
+async function installApp(){
+  if(!deferredInstallPrompt)return;
+  deferredInstallPrompt.prompt();
+  await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt=null;
+  document.getElementById('installCard').style.display='none';
+}
+window.addEventListener('appinstalled',()=>{
+  const card=document.getElementById('installCard');if(card)card.style.display='none';
+});
+</script>
+</body>
+</html>
